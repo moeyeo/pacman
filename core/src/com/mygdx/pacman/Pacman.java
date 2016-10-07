@@ -9,9 +9,9 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Pacman {
     private Vector2 position;
-    public static final int DIRECTION_UP = 3;
+    public static final int DIRECTION_UP = 1;
     public static final int DIRECTION_RIGHT = 2;
-    public static final int DIRECTION_DOWN = 1;
+    public static final int DIRECTION_DOWN = 3;
     public static final int DIRECTION_LEFT = 4;
     public static final int DIRECTION_STILL = 0;
     private static final int [][] DIR_OFFSETS = new int [][] {
@@ -32,6 +32,6 @@ public class Pacman {
     
     public void move(int dir) { 
         position.x += 10 * DIR_OFFSETS[dir][0];
-        position.y += 10 * DIR_OFFSETS[dir][1];
+        position.y -= 10 * DIR_OFFSETS[dir][1];
     }
 }
