@@ -46,6 +46,9 @@ public class Pacman {
     }
     public void update() {
         if(isAtCenter()) {
+            if(maze.hasDotAt(getRow(),getColumn()))
+             maze.removeDotAt(getRow(),getColumn());
+            
             if(canMoveInDirection(nextDirection)) {
                 currentDirection = nextDirection;    
             } else {
@@ -57,7 +60,7 @@ public class Pacman {
     }
     public boolean isAtCenter() {
         int blockSize = WorldRenderer.BLOCK_SIZE;
- 
+         
         return ((((int)position.x - blockSize/2) % blockSize) == 0) &&
                 ((((int)position.y - blockSize/2) % blockSize) == 0);
     }
