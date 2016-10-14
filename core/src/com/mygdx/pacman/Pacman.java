@@ -8,11 +8,11 @@ package com.mygdx.pacman;
 import com.badlogic.gdx.math.Vector2;
 
 public class Pacman {
+    private World world;
     public static final int SPEED = 5;
     private Vector2 position;
     private int currentDirection;
     private int nextDirection;
-    private Maze maze;
     public static final int DIRECTION_UP = 1;
     public static final int DIRECTION_RIGHT = 2;
     public static final int DIRECTION_DOWN = 3;
@@ -26,8 +26,8 @@ public class Pacman {
         {-1,0}
     };
     
-    public Pacman(int x, int y,Maze maze) {
-        this.maze = maze;
+    public Pacman(int x, int y,World world) {
+        this.world = world;
         position = new Vector2(x,y);
         currentDirection = DIRECTION_STILL;
         nextDirection = DIRECTION_STILL;
@@ -45,9 +45,12 @@ public class Pacman {
         nextDirection = dir;
     }
     public void update() {
+        Maze maze = world.getMaze();
         if(isAtCenter()) {
-            if(maze.hasDotAt(getRow(),getColumn()))
-             maze.removeDotAt(getRow(),getColumn());
+            if(maze.hasDotAt(getRow(),getColumn())){
+                maze.removeDotAt(getRow(),getColumn());
+                world.increaseScore();
+            }
             
             if(canMoveInDirection(nextDirection)) {
                 currentDirection = nextDirection;    
@@ -65,6 +68,7 @@ public class Pacman {
                 ((((int)position.y - blockSize/2) % blockSize) == 0);
     }
     private boolean canMoveInDirection(int dir) {
+        Maze maze = world.getMaze();
         int newRow = getRow()+DIR_OFFSETS[dir][1];
         int newCol = getColumn()+DIR_OFFSETS[dir][0];
         if(maze.hasWallAt(newRow,newCol)==true)
